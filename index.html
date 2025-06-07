@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visor 3D - Modelo 2</title>
+
+  <!-- model-viewer -->
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+  <style>
+    :root {
+      --bg-color: #111;
+      --text-color: #fff;
+      --accent-color: #2196f3;
+    }
+
+    body {
+      margin: 0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      color: var(--accent-color);
+    }
+
+    model-viewer {
+      width: 100%;
+      height: 80vh;
+      background-color: #222;
+      border-radius: 10px;
+    }
+
+    .controls {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+    }
+
+    button, input[type="file"] {
+      padding: 0.5rem 1rem;
+      background-color: var(--accent-color);
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 1rem;
+      font-size: 0.8rem;
+      color: #aaa;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Modelo 2 - Visualización 3D</h1>
+
+  <model-viewer
+    id="visor"
+    src="modelo2.glb"
+    alt="Modelo 2"
+    auto-rotate
+    camera-controls
+    shadow-intensity="1"
+    touch-action="pan-y"
+    ar
+    ar-modes="webxr scene-viewer quick-look"
+    environment-image="neutral"
+    exposure="1">
+  </model-viewer>
+
+  <div class="controls">
+    <input type="file" id="fileInput" accept=".glb" />
+    <button onclick="toggleAutoRotate()">⟳ Auto-rotar</button>
+  </div>
+
+  <footer>
+    <p>Vista del modelo 2. Compatible con .glb local y AR.</p>
+  </footer>
+
+  <script>
+    const viewer = document.getElementById('visor');
+    const fileInput = document.getElementById('fileInput');
+
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file && file.name.endsWith('.glb')) {
+        const url = URL.createObjectURL(file);
+        viewer.src = url;
+      } else {
+        alert("Selecciona un archivo .glb válido.");
+      }
+    });
+
+    function toggleAutoRotate() {
+      viewer.autoRotate = !viewer.autoRotate;
+    }
+  </script>
+
+</body>
+</html>
+
